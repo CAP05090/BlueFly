@@ -9,11 +9,14 @@ const { userRouter } = require("./routes/userRoute")
 const { productRouter } = require("./routes/ProductRoute")
 const { newProductRouter } = require("./routes/newProductRoute")
 const { auth } = require("./middlewares/auth.middleware")
+const { errorHandle } = require("./middlewares/errorHandling.middleware")
 
 const app = express()
 const PORT = process.env.PORT
 
 // Middlewares
+app.use(express.json())
+app.use(errorHandle)
 app.use(cors({origin: "*"}))
 
 // Routes
