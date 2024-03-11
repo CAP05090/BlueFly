@@ -1,5 +1,7 @@
 const express = require("express")
 const dotenv = require("dotenv").config()
+const swaggerjsdoc = require("swagger-jsdoc")
+const swaggerui = require("swagger-ui-express")
 const cors = require("cors")
 
 const { connection } = require("./configs/db")
