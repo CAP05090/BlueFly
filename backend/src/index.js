@@ -8,6 +8,7 @@ const { connection } = require("./configs/db")
 const { userRouter } = require("./routes/userRoute")
 const { productRouter } = require("./routes/ProductRoute")
 const { newProductRouter } = require("./routes/newProductRoute")
+const { auth } = require("./middlewares/auth.middleware")
 
 const app = express()
 const PORT = process.env.PORT
@@ -18,7 +19,7 @@ app.use(cors({origin: "*"}))
 // Routes
 app.use("/users", userRouter)
 app.use("/products", productRouter)
-app.use("/newproducts", newProductRouter)
+app.use("/newproducts",auth, newProductRouter)
 
 // Swagger Docs
 const options = {
