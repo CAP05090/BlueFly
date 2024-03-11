@@ -3,11 +3,37 @@ const dotenv = require("dotenv").config()
 const cors = require("cors")
 
 const { connection } = require("./configs/db")
+const { userRouter } = require("./routes/userRoute")
+const { productRouter } = require("./routes/ProductRoute")
+const { newProductRouter } = require("./routes/newProductRoute")
 
 const app = express()
 const PORT = process.env.PORT
 
+// Middlewares
 app.use(cors({origin: "*"}))
+
+// Routes
+app.use("/users", userRouter)
+app.use("/products", productRouter)
+app.use("/newproducts", newProductRouter)
+
+// Swagger Docs
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "BlueFly Shopping Site",
+            version: "1.0.0"
+        },
+        servers: [{url:"http://localhost:8080"}]
+    },
+    apis: ["src/routes/*.js"]
+}
+//Open API Specs
+const openAPISpecs = swaggerjsdoc(options)
+// Build the Swagger with help of openAPI
+app.use("/docs", swaggerui.serve, swaggerui.setup(openAPISpecs))
 
 // Home Page
 app.get("/", (req, res)=>{
